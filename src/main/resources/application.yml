@@ -1,0 +1,32 @@
+server:
+  port: 8082
+
+aws:
+  accessKeyId: ${AWS_ACCESS_KEY_ID}
+  secretKey: ${AWS_SECRET_KEY}
+  region: ${AWS_REGION}
+  s3:
+    buckets:
+        customer: ${AWS_BUCKET}
+
+spring:
+  datasource:
+    username: ${DB_USERNAME}
+    url: jdbc:postgresql://${DB_HOST}/${DB_NAME}
+    password: ${DB_PASSWORD}
+    test-on-borrow: true
+    validation-query: SELECT 1 FROM dual
+    flyway:
+      baselineOnMigrate: true
+      user: ${DB_USERNAME}
+      password: ${DB_PASSWORD}
+      schemas: public
+      createSchemas: true
+      locations: classpath:db/migration
+
+    jpa:
+      show-sql: true
+      hibernate:
+        format-sql: true
+  messages:
+    basename: i18m/messages
