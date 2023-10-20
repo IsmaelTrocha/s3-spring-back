@@ -20,7 +20,7 @@ public class WebConfig {
   public MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter() {
     MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
     converter.setSupportedMediaTypes(
-        List.of(MediaType.ALL));
+        List.of(MediaType.IMAGE_JPEG,MediaType.IMAGE_GIF,MediaType.IMAGE_PNG));
     return converter;
   }
 

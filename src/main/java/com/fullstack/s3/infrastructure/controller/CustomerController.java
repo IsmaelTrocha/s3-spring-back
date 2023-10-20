@@ -51,6 +51,12 @@ public class CustomerController {
         HttpStatus.CREATED);
   }
 
+
+  @GetMapping(path = "/greetings")
+  public String greetings(){
+    return "Hello";
+  }
+
   @PostMapping(
       value = "/{customerId}/profile-image",
       consumes = MediaType.MULTIPART_FORM_DATA_VALUE
