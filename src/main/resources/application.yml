@@ -11,15 +11,15 @@ aws:
 
 spring:
   datasource:
-    username: ${DB_USERNAME}
-    url: jdbc:postgresql://${DB_HOST}/${DB_NAME}
-    password: ${DB_PASSWORD}
+    username: postgres
+    url: jdbc:postgresql://containers-us-west-49.railway.app:6073/railway
+    password: 9CTkX6hlZxUgC9gG3YSY
     test-on-borrow: true
     validation-query: SELECT 1 FROM dual
     flyway:
       baselineOnMigrate: true
-      user: ${DB_USERNAME}
-      password: ${DB_PASSWORD}
+      user: postgres
+      password: 9CTkX6hlZxUgC9gG3YSY
       schemas: public
       createSchemas: true
       locations: classpath:db/migration
