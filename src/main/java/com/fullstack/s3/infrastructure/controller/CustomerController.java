@@ -10,10 +10,7 @@ import com.fullstack.s3.infrastructure.controller.mapper.request.CustomerRequest
 import com.fullstack.s3.infrastructure.controller.mapper.response.CustomerResponseMapper;
 import com.fullstack.s3.shared.MessageUtils;
 import com.fullstack.s3.shared.exceptions.code.MessageCode;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import javax.imageio.ImageIO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -51,7 +48,6 @@ public class CustomerController {
         HttpStatus.CREATED);
   }
 
-
   @GetMapping(path = "/greetings")
   public String greetings(){
     return "Hello";
@@ -61,22 +57,53 @@ public class CustomerController {
       value = "/{customerId}/profile-image",
       consumes = MediaType.MULTIPART_FORM_DATA_VALUE
   )
+
   public void uploadCustomerProfilePicture(
       @PathVariable("customerId") Long customerId,
       @RequestParam("file") MultipartFile file) {
     customerService.uploadCustomerProfilePicture(customerId, file);
   }
 
+  /*
+  * @GetMapping(
+        value = "/profile-image/{customerId}",
+        produces = MediaType.IMAGE_JPEG_VALUE
+    )
+      public StreamingResponseBody mostrarImagen(@PathVariable("customerId") Long customerId) {
+          // Aquí debes obtener el array de bytes de la imagen según el nombre proporcionado.
+          byte[] imagenBytes = obtenerImagenPorNombre(nombreImagen);
+
+          return outputStream -> {
+              try (InputStream inputStream = new ByteArrayInputStream(imagenBytes)) {
+                  int nRead;
+                  byte[] data = new byte[1024];
+                  while ((nRead = inputStream.read(data, 0, data.length)) != -1) {
+                      outputStream.write(data, 0, nRead);
+                  }
+              } catch (IOException e) {
+                  // Manejo de excepciones
+              }
+          };
+      }
+  * */
   @GetMapping(
       value = "/profile-image/{customerId}",
       produces = MediaType.IMAGE_JPEG_VALUE
   )
-  public ResponseEntity<BufferedImage> getCustomerProfile(
+  public ResponseEntity<byte[]> getCustomerProfile(
       @PathVariable("customerId") Long customerId) throws IOException {
-    ByteArrayInputStream bis = new ByteArrayInputStream(
-        customerService.getCustomerProfilePicture(customerId));
-    return new ResponseEntity<>(ImageIO.read(bis), HttpStatus.OK);
+    byte[] imagenBytes = customerService.getCustomerProfilePicture(customerId);
+
+    if (imagenBytes != null) {
+      return ResponseEntity
+          .ok()
+          .contentType(MediaType.IMAGE_JPEG)
+          .body(imagenBytes);
+    } else {
+      return ResponseEntity.notFound().build();
+    }
   }
+
 
   @GetMapping(
       value = "/{customerId}"
