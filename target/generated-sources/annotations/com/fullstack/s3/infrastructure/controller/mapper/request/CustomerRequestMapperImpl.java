@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-10-20T15:23:05-0500",
+    date = "2023-10-20T16:19:59-0500",
     comments = "version: 1.5.3.Final, compiler: javac, environment: Java 20.0.2 (Oracle Corporation)"
 )
 @Component
@@ -23,6 +23,13 @@ public class CustomerRequestMapperImpl implements CustomerRequestMapper {
 
         CustomerRequest customerRequest = new CustomerRequest();
 
+        customerRequest.setName( entity.getName() );
+        customerRequest.setEmail( entity.getEmail() );
+        customerRequest.setPassword( entity.getPassword() );
+        customerRequest.setPhone( entity.getPhone() );
+        customerRequest.setProfileImageId( entity.getProfileImageId() );
+        customerRequest.setAge( entity.getAge() );
+
         return customerRequest;
     }
 
@@ -33,6 +40,13 @@ public class CustomerRequestMapperImpl implements CustomerRequestMapper {
         }
 
         Customer customer = new Customer();
+
+        customer.setName( toDto.getName() );
+        customer.setEmail( toDto.getEmail() );
+        customer.setPassword( toDto.getPassword() );
+        customer.setPhone( toDto.getPhone() );
+        customer.setProfileImageId( toDto.getProfileImageId() );
+        customer.setAge( toDto.getAge() );
 
         return customer;
     }
