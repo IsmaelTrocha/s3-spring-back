@@ -6,12 +6,14 @@ import com.fullstack.s3.shared.exceptions.code.ExceptionCode;
 import com.fullstack.s3.shared.exceptions.message.image.ImageNotAllowedException;
 import com.fullstack.s3.shared.exceptions.message.image.ImageOutOfBoundsException;
 import com.fullstack.s3.shared.exceptions.message.image.ImageRequiredException;
+import lombok.AllArgsConstructor;
 import org.springframework.web.multipart.MultipartFile;
 
+@AllArgsConstructor
 public class ImageValidations {
 
   public static final int MAX_FILE_SIZE = 6 * 1024 * 1024;
-  private MessageUtils messageUtils;
+  private final MessageUtils messageUtils;
 
   private void imageValidations(MultipartFile file) {
     imageOutOfBounds(file);

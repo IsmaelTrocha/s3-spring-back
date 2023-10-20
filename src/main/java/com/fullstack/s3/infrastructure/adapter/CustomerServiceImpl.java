@@ -9,9 +9,6 @@ import com.fullstack.s3.infrastructure.repository.CustomerRepository;
 import com.fullstack.s3.shared.MessageUtils;
 import com.fullstack.s3.shared.exceptions.code.ExceptionCode;
 import com.fullstack.s3.shared.exceptions.message.customer.ProfileImageNotFoundException;
-import com.fullstack.s3.shared.exceptions.message.image.ImageNotAllowedException;
-import com.fullstack.s3.shared.exceptions.message.image.ImageOutOfBoundsException;
-import com.fullstack.s3.shared.exceptions.message.image.ImageRequiredException;
 import java.io.IOException;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +19,6 @@ import org.springframework.web.multipart.MultipartFile;
 @RequiredArgsConstructor
 public class CustomerServiceImpl implements CustomerService {
 
-  private static final long MAX_FILE_SIZE = 6 * 1024 * 1024;
   private final S3Service s3Service;
   private final S3Bucket s3Bucket;
   private final CustomerRepository customerRepository;
@@ -78,8 +74,4 @@ public class CustomerServiceImpl implements CustomerService {
   public void updateCustomerProfileImageId(String imageProfileId, Long customerId) {
     customerRepository.updateCustomerProfileImageId(customerId, imageProfileId);
   }
-
-
-
-
 }
